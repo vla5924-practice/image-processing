@@ -1,0 +1,5 @@
+.vscode/
+.idea/
+
+00_test/*.png
+!00_test/image.png
