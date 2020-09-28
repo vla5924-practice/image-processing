@@ -1,5 +1,8 @@
 .vscode/
 .idea/
+__pycache__/
 
 00_test/*.png
 !00_test/image.png
+01_filters/*.png
+!01_filters/image.png
