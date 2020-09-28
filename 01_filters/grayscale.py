@@ -3,7 +3,9 @@ import cv2
 
 
 def luminosity(bgr_image: numpy.ndarray):
-    width, height, _ = bgr_image.shape
+    width, height, dim = bgr_image.shape
+    if dim != 3:
+        raise ValueError("Image must have 3 color channels")
     gs_image = numpy.zeros((width, height), "ubyte")
     for x in range(width):
         for y in range(height):
@@ -17,3 +19,7 @@ def test(filename):
     cv2.imshow("Image", gs_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    test("image.png")
