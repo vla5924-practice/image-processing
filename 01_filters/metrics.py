@@ -2,10 +2,12 @@ import numpy
 import cv2
 
 
-def mse(bgr_image1, bgr_image2):
-    if bgr_image2.shape != bgr_image1.shape:
+def mse(bgr_image1: numpy.ndarray, bgr_image2: numpy.ndarray) -> float:
+    if bgr_image1.shape != bgr_image2.shape:
         raise ValueError("Images have different sizes")
     width, height, dim = bgr_image1.shape
+    if dim != 3:
+        raise ValueError("Images must have 3 color channels")
     sum_r = 0
     sum_g = 0
     sum_b = 0
