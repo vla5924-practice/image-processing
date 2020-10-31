@@ -1,4 +1,5 @@
 import numpy
+from clamp import clamp
 
 
 def averaging(gs_image: numpy.ndarray) -> numpy.ndarray:
