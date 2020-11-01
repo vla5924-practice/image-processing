@@ -1,5 +1,4 @@
 import numpy
-import cv2
 
 
 def luminosity(bgr_image: numpy.ndarray) -> numpy.ndarray:
