@@ -14,4 +14,3 @@ def salt_and_pepper(gs_image: numpy.ndarray) -> numpy.ndarray:
             elif salt_pepper_noise[x, y] > 225:
                 result_image[x, y] = 255
     return result_image
-
