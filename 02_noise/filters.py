@@ -1,5 +1,12 @@
 import numpy
-from clamp import clamp
+
+
+def clamp(value, min, max):
+    if value < min:
+        return min
+    if value > max:
+        return max
+    return value
 
 
 def averaging(gs_image: numpy.ndarray, radius: int) -> numpy.ndarray:
@@ -9,9 +16,7 @@ def averaging(gs_image: numpy.ndarray, radius: int) -> numpy.ndarray:
         raise ValueError("Radius must be positive")
     width, height = gs_image.shape
     result_image = numpy.zeros((width, height), "ubyte")
-    near_rows = 2 * radius + 1
-    near_size = near_rows * near_rows
-    near = numpy.zeros(near_size, "ubyte")
+    near_count = (2 * radius + 1) ** 2
     for x in range(width):
         for y in range(height):
             # Collecting near values sum
@@ -22,7 +27,7 @@ def averaging(gs_image: numpy.ndarray, radius: int) -> numpy.ndarray:
                     near_y = clamp(y + i, 0, height - 1)
                     near_sum += gs_image[near_x, near_y]
             # Counting avg value
-            avg = near_sum / near_size
+            avg = near_sum / near_count
             # Set avg value
             result_image[x, y] = avg
     return result_image
@@ -35,9 +40,8 @@ def median(gs_image: numpy.ndarray, radius: int) -> numpy.ndarray:
         raise ValueError("Radius must be positive")
     width, height = gs_image.shape
     result_image = numpy.zeros((width, height), "ubyte")
-    near_rows = 2 * radius + 1
-    near_size = near_rows * near_rows
-    near = numpy.zeros(near_size, "ubyte")
+    near_count = (2 * radius + 1) ** 2
+    near = numpy.zeros(near_count, "ubyte")
     for x in range(width):
         for y in range(height):
             # Collecting near values array
@@ -51,5 +55,5 @@ def median(gs_image: numpy.ndarray, radius: int) -> numpy.ndarray:
             # Near values array is now ready, we can sort it
             near.sort()
             # Set median value
-            result_image[x, y] = near[int(near_size / 2)]
+            result_image[x, y] = near[int(near_count / 2)]
     return result_image

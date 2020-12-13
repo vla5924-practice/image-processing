@@ -1,5 +1,4 @@
 import numpy
-import cv2
 
 
 def clamp(value, minimal, maximal):

@@ -1,5 +1,4 @@
 import numpy
-import cv2
 
 
 def mse(bgr_image1: numpy.ndarray, bgr_image2: numpy.ndarray) -> float:
