@@ -55,7 +55,7 @@ def do_watershed(image):
                     fifo.append(p)
                     break
             while fifo:
-            p = fifo.popleft()
+                p = fifo.popleft()
             for q in neighbours[p[0], p[1]]:
                 lab_p = labels[p[0], p[1]]
                 lab_q = labels[q[0], q[1]]
@@ -73,16 +73,16 @@ def do_watershed(image):
                     labels[q[0], q[1]] = INQE
                     fifo.append(q)
         for p in sorted_pixels[start_index:stop_index]:
-        if labels[p[0], p[1]] == MASK:
-            current_label += 1
-            fifo.append(p)
-            labels[p[0], p[1]] = current_label
-            while fifo:
-                q = fifo.popleft()
-                for r in neighbours[q[0], q[1]]:
-                    if labels[r[0], r[1]] == MASK:
-                    fifo.append(r)
-                    labels[r[0], r[1]] = current_label
+            if labels[p[0], p[1]] == MASK:
+                current_label += 1
+                fifo.append(p)
+                labels[p[0], p[1]] = current_label
+                while fifo:
+                    q = fifo.popleft()
+                    for r in neighbours[q[0], q[1]]:
+                        if labels[r[0], r[1]] == MASK:
+                            fifo.append(r)
+                        labels[r[0], r[1]] = current_label
 
         start_index = stop_index
     return labels
