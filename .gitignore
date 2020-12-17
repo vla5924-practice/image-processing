@@ -6,3 +6,4 @@ __pycache__/
 !00_test/image.png
 !01_filters/image.png
 !02_noise/image.png
+!03_edges/image.png
