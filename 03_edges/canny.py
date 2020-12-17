@@ -12,13 +12,14 @@ def follow_edges(x: int, y: int, magnitude: numpy.ndarray, t_upper: int, t_lower
                 if magnitude[y + j, x + i] > t_lower and edges[y + j, x + i] != 255:
                     follow_edges(x + i, y + j, magnitude, t_upper, t_lower, edges)
 
-def detect_edge(magnitude: numpy.ndarray, t_upper: int, t_lower: int, edges: numpy.ndarray):
+def detect_edge(magnitude: numpy.ndarray, t_upper: int, t_lower: int)->numpy.ndarray:
     rows, cols = magnitude.shape
     edges = numpy.zeros(magnitude.shape, "float32")
     for x in range(cols):
         for y in range(rows):
             if magnitude[y, x] >= t_upper:
                 follow_edges(x, y, magnitude, t_upper, t_lower, edges)
+    return edges
 
 def non_maximum_suppression(magnitude: numpy.ndarray, direction: numpy.ndarray):
     check = numpy.zeros(magnitude.shape, "ubyte")
@@ -50,7 +51,7 @@ def non_maximum_suppression(magnitude: numpy.ndarray, direction: numpy.ndarray):
                 if x < cols - 1 and magnitude[y, x] <= magnitude[y, x + 1]:
                     magnitude[y, x] = 0
 
-def do_edge_detection(gs_image: numpy.ndarray, edges: numpy.ndarray, t_upper: int, t_lower: int)-> numpy.ndarray:
+def do_edge_detection(gs_image: numpy.ndarray, t_upper: int, t_lower: int)-> numpy.ndarray:
     image = gs_image.copy()
     image = cv2.GaussianBlur(image, (3, 3), 1.5)
     mag_x = cv2.Sobel(image, "float32", 1, 0, ksize=3)
@@ -59,5 +60,4 @@ def do_edge_detection(gs_image: numpy.ndarray, edges: numpy.ndarray, t_upper: in
     sum = sqrt(mag_x * mag_x + mag_y * mag_y)
     magnitude = sum.copy()
     non_maximum_suppression(magnitude, slopes)
-    detect_edge(magnitude, t_upper, t_lower, edges)
-    return edges
+    return detect_edge(magnitude, t_upper, t_lower)
